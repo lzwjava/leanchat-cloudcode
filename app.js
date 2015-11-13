@@ -12,6 +12,7 @@ var _ = require('underscore');
 var msign = require('./custom/msign');
 var mchat = require('./custom/mchat');
 var mlog = require('./custom/mlog');
+var mwebhook = require('./custom/mwebhook');
 
 var app = express();
 
@@ -92,7 +93,6 @@ function pushMessageTest(req, res) {
   res.send(mchat.getPushMessage(params));
 }
 
-
 function test(req, res) {
   res.send('ok');
 }
@@ -105,6 +105,8 @@ if (mutil.isDevelopment()) {
 
 app.get('/convSign', convSign);
 app.get('/', convSign);
+
+app.use('/webhook', mwebhook);
 
 // 如果任何路由都没匹配到，则认为 404
 // 生成一个异常让后面的 err handler 捕获
